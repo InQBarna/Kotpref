@@ -1,6 +1,14 @@
 container:
   image: cirrusci/android-sdk:28
 
-test_task:
+master_test_task:
+  only_if: $CIRRUS_BRANCH == 'master'
+  env:
+    CODECOV_TOKEN: ENCRYPTED[4b8575ee726e3d5eb20b64254aa2ba5216c9c87673c8833f31bb3b9f8afa876dd0a10bcbd84feed197a1f57fbec364f5]
   test_script: ./gradlew jacocoTestReport
-  upload_coverage_script: bash <(curl -s https://codecov.io/bash)
+  upload_coverage_script: bash <(curl -s https://codecov.io/bash) -B $CIRRUS_BRANCH -P $CIRRUS_PR -T $CIRRUS_TAG -b $CIRRUS_BUILD_ID
+
+
+test_task:
+  only_if: $CIRRUS_BRANCH != 'master'
+  test_script: ./gradlew testDebugUnitTest
