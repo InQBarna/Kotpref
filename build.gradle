@@ -6,7 +6,7 @@ import dependencies.Versions
 buildscript {
 
     ext.versionName = Versions.versionName
-    ext.groupName = 'com.chibatching.kotpref'
+    ext.groupName = 'com.inqbarna.kotpref'
 
     repositories {
         jcenter()
